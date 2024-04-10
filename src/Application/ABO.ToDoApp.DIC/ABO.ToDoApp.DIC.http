@@ -1,0 +1,6 @@
+@ABO.ToDoApp.DIC_HostAddress = http://localhost:5034
+
+GET {{ABO.ToDoApp.DIC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
