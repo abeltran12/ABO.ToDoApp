@@ -9,6 +9,7 @@ public class TodoListMapping : IEntityTypeConfiguration<TodoList>
     public void Configure(EntityTypeBuilder<TodoList> builder)
     {
         builder
+            .ToTable("TodoLists")
             .HasKey(x => x.Id);
 
         builder
@@ -18,18 +19,17 @@ public class TodoListMapping : IEntityTypeConfiguration<TodoList>
             .HasColumnType("varchar");
 
         builder
+            .Property(x => x.UserId)
+            .IsRequired();
+
+        builder
             .Property(x => x.Status)
-            .IsRequired()
-            .HasDefaultValue(1);
+            .IsRequired();
 
         //Shadow property
         builder.Property<DateTime>("CreationDate")
-            .IsRequired().HasColumnName("CreationDate").HasDefaultValue(DateTime.UtcNow);
+            .IsRequired().HasColumnName("CreationDate");
         builder.Property<DateTime>("UpdatedDate")
-            .IsRequired().HasColumnName("UpdatedDate").HasDefaultValue(DateTime.UtcNow); ;
-        builder.Property<int>("CreatedBy")
-            .IsRequired().HasColumnName("CreatedBy");
-        builder.Property<int>("UpdatedBy")
-            .IsRequired().HasColumnName("UpdatedBy");
+            .IsRequired().HasColumnName("UpdatedDate");
     }
 }

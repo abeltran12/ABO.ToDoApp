@@ -29,17 +29,16 @@ public class TodoItemMapping : IEntityTypeConfiguration<TodoItem>
 
         builder
             .Property(x => x.Status)
-            .IsRequired()
-            .HasDefaultValue(1);
+            .IsRequired();
 
         builder
-            .Property(x => x.IdTodoList)
+            .Property(x => x.TodoListId)
             .IsRequired();
 
         //Shadow property
         builder.Property<DateTime>("CreationDate")
-            .IsRequired().HasColumnName("CreationDate").HasDefaultValue(DateTime.UtcNow);
+            .IsRequired().HasColumnName("CreationDate");
         builder.Property<DateTime>("UpdatedDate")
-            .IsRequired().HasColumnName("UpdatedDate").HasDefaultValue(DateTime.UtcNow); ;
+            .IsRequired().HasColumnName("UpdatedDate");
     }
 }

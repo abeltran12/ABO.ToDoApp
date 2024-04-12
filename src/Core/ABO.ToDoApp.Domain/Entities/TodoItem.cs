@@ -12,7 +12,7 @@ public class TodoItem
 
     public Status Status { get; set; }
 
-    public int IdTodoList { get; set; }
+    public int TodoListId { get; set; }
 
     public TodoList? TodoList { get; set; }
 }

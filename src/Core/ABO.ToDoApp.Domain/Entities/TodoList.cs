@@ -6,5 +6,9 @@ public class TodoList
 
     public string Name { get; set; } = string.Empty;
 
+    public int UserId { get; set; }
+
     public Status Status { get; set; }
+
+    public ICollection<TodoItem>? TodoItems { get; set; }
 }
