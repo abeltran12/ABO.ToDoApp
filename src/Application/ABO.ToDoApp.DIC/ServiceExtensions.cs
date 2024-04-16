@@ -1,5 +1,8 @@
-﻿using ABO.ToDoApp.Domain.Entities;
+﻿using ABO.ToDoApp.Application.MappingProfile;
+using ABO.ToDoApp.Contracts;
+using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Data.DbContexts;
+using ABO.ToDoApp.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,5 +35,18 @@ public static class ServiceExtensions
             options.SignIn.RequireConfirmedEmail = true;
         }).AddEntityFrameworkStores<ToDoAppContext>()
             .AddDefaultTokenProviders();
+    }
+
+    public static void AddApplicationDependencies(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(UserProfile));
+
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblyContaining(typeof(UserProfile)));
+    }
+
+    public static void ConfigureAuthService(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthService, AuthService>();
     }
 }

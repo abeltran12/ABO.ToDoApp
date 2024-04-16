@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.9.0" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Application\ABO.ToDoApp.Shared\ABO.ToDoApp.Shared.csproj" />
     <ProjectReference Include="..\ABO.ToDoApp.Domain\ABO.ToDoApp.Domain.csproj" />
   </ItemGroup>
