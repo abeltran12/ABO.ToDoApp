@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ABO.ToDoApp.Application.Feautures
+namespace ABO.ToDoApp.Application.Feautures.Identity
 {
     public class RegisterUserValidator : AbstractValidator<RegisterUserRequest>
     {

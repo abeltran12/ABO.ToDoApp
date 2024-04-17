@@ -1,10 +1,10 @@
-﻿using ABO.ToDoApp.Application;
+﻿using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Shared.Identity.Models;
 
 namespace ABO.ToDoApp.Contracts;
 
 public interface IAuthService
 {
-    Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request);
+    Task<RegisterUserResponse> RegisterUser(User user, string password);
     //Task<Result<bool>> ValidateUser(LoginUserResponse request);
 }

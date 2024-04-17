@@ -1,6 +1,6 @@
-﻿using ABO.ToDoApp.Application;
-using ABO.ToDoApp.Application.Exceptions;
+﻿using ABO.ToDoApp.Application.Exceptions;
 using ABO.ToDoApp.Application.Feautures;
+using ABO.ToDoApp.Application.Feautures.Identity;
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Shared.Identity.Models;
@@ -21,27 +21,19 @@ public class AuthService : IAuthService
         _mapper = mapper;
     }
 
-    public async Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request)
+    public async Task<RegisterUserResponse> RegisterUser(User user, string password)
     {
-        var validator = new RegisterUserValidator();
-        var validatorResult = await validator.ValidateAsync(request);
+        var userExists = await _userManager.FindByEmailAsync(user.Email!);
 
-        if (validatorResult.Errors.Count != 0)
-            throw new BadRequestException("Register request invalid.", validatorResult);
-
-        var user = await _userManager.FindByEmailAsync(request.Email!);
-
-        if (user != null)
+        if (userExists != null)
             throw new BadRequestException("Email is already in use.");
 
-        var userForCreation = _mapper.Map<User>(request);
-
-        var result = await _userManager.CreateAsync(userForCreation, request.Password);
+        var result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
             throw new BadRequestException("Register request invalid.", result.Errors);
 
-        return new RegisterUserResponse(userForCreation.Id);
+        return new RegisterUserResponse(user.Id);
     }
 
     //public Task<Result<bool>> ValidateUser(UserForAuthenticationRequest request)
