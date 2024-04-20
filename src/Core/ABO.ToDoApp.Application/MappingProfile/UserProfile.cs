@@ -1,4 +1,4 @@
-﻿using ABO.ToDoApp.Application.Feautures.Identity;
+﻿using ABO.ToDoApp.Application.Feautures.Identity.Register;
 using ABO.ToDoApp.Domain.Entities;
 using AutoMapper;
 

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ABO.ToDoApp.Application.Feautures.Identity
+namespace ABO.ToDoApp.Application.Feautures.Identity.Register
 {
     public class RegisterUserValidator : AbstractValidator<RegisterUserRequest>
     {
@@ -17,7 +17,8 @@ namespace ABO.ToDoApp.Application.Feautures.Identity
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required.")
-                .NotNull().WithMessage("Password cannot be null.");
+                .NotNull().WithMessage("Password cannot be null.")
+                .Length(8,8).WithMessage("Password lenght must be 8 characters.");
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("Phone number is required.")
