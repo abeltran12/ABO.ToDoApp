@@ -2,7 +2,7 @@
 
 namespace ABO.ToDoApp.Application.Feautures.Identity.Login;
 
-public class LoginUserRequest : IRequest<bool>
+public class LoginUserRequest : IRequest<TokenResponse>
 {
     public string Email { get; set; } = string.Empty;
 

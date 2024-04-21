@@ -18,4 +18,8 @@
     <ProjectReference Include="..\ABO.ToDoApp.Domain\ABO.ToDoApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Feautures\Identity\GenerateToken\" />
+  </ItemGroup>
+
 </Project>

@@ -1,11 +1,10 @@
 ﻿using ABO.ToDoApp.Application.Exceptions;
-using ABO.ToDoApp.Application.Feautures.Identity.Register;
 using ABO.ToDoApp.Contracts;
 using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.Identity.Login;
 
-public class LoginUserHandler : IRequestHandler<LoginUserRequest, bool>
+public class LoginUserHandler : IRequestHandler<LoginUserRequest,TokenResponse>
 {
     private readonly IAuthService _service;
 
@@ -14,7 +13,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserRequest, bool>
         _service = service;
     }
 
-    public async Task<bool> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+    public async Task<TokenResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         var validator = new LoginUserValidator();
         var validatorResult = await validator.ValidateAsync(request, cancellationToken);

@@ -7,6 +7,5 @@ namespace ABO.ToDoApp.Contracts;
 public interface IAuthService
 {
     Task<RegisterUserResponse> RegisterUser(User user, string password);
-    Task<bool> ValidateUser(LoginUserRequest request);
-    Task<TokenResponse> CreateToken();
+    Task<TokenResponse> ValidateUser(LoginUserRequest request);
 }

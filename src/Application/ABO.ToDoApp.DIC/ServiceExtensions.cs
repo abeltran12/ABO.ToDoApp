@@ -2,9 +2,15 @@
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Data.DbContexts;
+using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+
 
 namespace ABO.ToDoApp.DIC;
 
@@ -45,8 +51,45 @@ public static class ServiceExtensions
             cfg.RegisterServicesFromAssemblyContaining(typeof(UserProfile)));
     }
 
-    public static void ConfigureAuthService(this IServiceCollection services)
+    public static void ConfigureAuthService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IAuthService, AuthService>();
+        services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
+        services.AddTransient<IAuthService, AuthService>();
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(o =>
+        {
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                ValidIssuer = configuration["JwtSettings:Issuer"],
+                ValidAudience = configuration["JwtSettings:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
+                    (configuration["JwtSettings:Key"]!))
+            };
+        });
+
+        services.AddScoped(sp =>
+        {
+            var httpContext = sp.GetService<IHttpContextAccessor>()!.HttpContext;
+
+            var identityOptions = new IdentityConfig();
+
+            if (httpContext.User.Identity.IsAuthenticated)
+            {
+                identityOptions.UserId = httpContext.User.FindFirstValue("uid") ?? "";
+            }
+
+            return identityOptions;
+        });
     }
+
 }

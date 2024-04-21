@@ -1,5 +1,7 @@
 using ABO.ToDoApp.DIC;
 using ABO.ToDoApp.DIC.Middleware;
+using ABO.ToDoApp.Infrastructure.Identity.Models;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.AddApplicationDependencies();
-builder.Services.ConfigureAuthService();
+builder.Services.ConfigureAuthService(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();
 
 builder.Services.AddControllers();
