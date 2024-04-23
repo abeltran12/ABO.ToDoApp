@@ -1,5 +1,6 @@
 ﻿using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Data.EntitieMappings;
+using ABO.ToDoApp.Infrastructure.Data.Interceptors;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,5 +19,11 @@ public class ToDoAppContext(DbContextOptions<ToDoAppContext> options) :
         base.OnModelCreating(builder);
         builder.ApplyConfiguration(new TodoListMapping());
         builder.ApplyConfiguration(new TodoItemMapping());
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.AddInterceptors(new SaveChangesInterceptor());
     }
 }

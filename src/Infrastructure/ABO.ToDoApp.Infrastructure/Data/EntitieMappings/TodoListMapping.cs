@@ -20,6 +20,8 @@ public class TodoListMapping : IEntityTypeConfiguration<TodoList>
 
         builder
             .Property(x => x.UserId)
+            .HasMaxLength(100)
+            .HasColumnType("varchar")
             .IsRequired();
 
         builder

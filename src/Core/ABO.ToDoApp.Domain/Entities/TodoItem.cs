@@ -1,6 +1,6 @@
 ﻿namespace ABO.ToDoApp.Domain.Entities;
 
-public class TodoItem
+public class TodoItem : IAuditable
 {
     public int Id { get; set; }
 

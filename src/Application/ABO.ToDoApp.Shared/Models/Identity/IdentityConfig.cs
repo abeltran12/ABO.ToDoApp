@@ -1,4 +1,4 @@
-﻿namespace ABO.ToDoApp.Infrastructure.Identity.Models;
+﻿namespace ABO.ToDoApp.Shared.Identity.Models;
 
 public class IdentityConfig
 {

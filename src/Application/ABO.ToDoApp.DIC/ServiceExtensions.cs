@@ -1,9 +1,12 @@
 ﻿using ABO.ToDoApp.Application.MappingProfile;
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
+using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Infrastructure.Data.DbContexts;
+using ABO.ToDoApp.Infrastructure.Data.Repositories;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
+using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +58,7 @@ public static class ServiceExtensions
     {
         services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
         services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<IUnitofwork, Unitofwork>();
 
         services.AddAuthentication(options =>
         {
