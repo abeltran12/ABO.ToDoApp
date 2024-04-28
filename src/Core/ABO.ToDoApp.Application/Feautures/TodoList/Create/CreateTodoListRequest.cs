@@ -1,7 +1,7 @@
 ﻿using ABO.ToDoApp.Shared.Models.TodoList;
 using MediatR;
 
-namespace ABO.ToDoApp.Application.Feautures.TodoList;
+namespace ABO.ToDoApp.Application.Feautures.TodoList.Create;
 
 public class CreateTodoListRequest : IRequest<ActionsResponse<CreateTodoListResponse>>
 {

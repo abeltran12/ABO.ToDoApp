@@ -19,21 +19,15 @@ namespace ABO.ToDoApp.Infrastructure.Identity.Services;
 public class AuthService : IAuthService
 {
     private readonly UserManager<User> _userManager;
-    private readonly IMapper _mapper;
     private readonly SignInManager<User> _signInManager;
-    private readonly IHttpContextAccessor _contextAccessor;
     private readonly IOptions<JwtConfiguration> _jwtSettings;
 
     public AuthService(UserManager<User> userManager, 
-            IMapper mapper, 
             SignInManager<User> signInManager, 
-            IHttpContextAccessor contextAccessor,
             IOptions<JwtConfiguration> jwtSettings)
     {
         _userManager = userManager;
-        _mapper = mapper;
         _signInManager = signInManager;
-        _contextAccessor = contextAccessor;
         _jwtSettings = jwtSettings;
     }
 

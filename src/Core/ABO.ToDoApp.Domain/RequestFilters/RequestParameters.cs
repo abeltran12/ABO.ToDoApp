@@ -1,4 +1,4 @@
-﻿namespace ABO.ToDoApp.Application.RequestFilters;
+﻿namespace ABO.ToDoApp.Domain.RequestFilters;
 
 public abstract class RequestParameters
 {

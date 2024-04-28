@@ -6,7 +6,7 @@ using ABO.ToDoApp.Shared.Models.TodoList;
 using AutoMapper;
 using MediatR;
 
-namespace ABO.ToDoApp.Application.Feautures.TodoList;
+namespace ABO.ToDoApp.Application.Feautures.TodoList.Create;
 
 public class CreateTodoListRequesHandler : IRequestHandler<CreateTodoListRequest, ActionsResponse<CreateTodoListResponse>>
 {

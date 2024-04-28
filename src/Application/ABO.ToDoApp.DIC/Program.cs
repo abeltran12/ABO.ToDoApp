@@ -1,7 +1,5 @@
 using ABO.ToDoApp.DIC;
 using ABO.ToDoApp.DIC.Middleware;
-using ABO.ToDoApp.Infrastructure.Identity.Models;
-using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 

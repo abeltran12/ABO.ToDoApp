@@ -3,5 +3,6 @@
 public interface IUnitofwork
 {
     ITodoListRepository TodoListRepository { get; }
+    ITodoItemRepository TodoItemRepository { get; }
     Task SaveAsync();
 }
