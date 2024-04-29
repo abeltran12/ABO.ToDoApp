@@ -1,6 +1,6 @@
 ﻿namespace ABO.ToDoApp.DIC.Models.TodoLists;
 
-public class CreateTodoList
+public class UpdateTodoList
 {
     public string Name { get; set; } = string.Empty;
 

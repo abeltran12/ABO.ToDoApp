@@ -1,4 +1,5 @@
 ﻿using ABO.ToDoApp.Application.Feautures.TodoList.Create;
+using ABO.ToDoApp.Application.Feautures.TodoList.Update;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Domain.Models;
 using ABO.ToDoApp.Shared.Models.TodoList;
@@ -17,5 +18,9 @@ public class TodoListProfile : Profile
 
         CreateMap<TodoListSelect, GetAllTodoListResponse>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusDecription));
+
+        CreateMap<TodoList, GetByIdTodoListResponse>();
+
+        CreateMap<UpdateTodoListRequest, TodoList>();
     }
 }

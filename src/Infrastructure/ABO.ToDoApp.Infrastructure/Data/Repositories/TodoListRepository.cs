@@ -29,10 +29,12 @@ public class TodoListRepository : ITodoListRepository
                     Id = x.Id,
                     Name = x.Name,
                     StatusDecription = StatusHelper.GetStatusString(x.Status),
-                    Status = x.Status
+                    Status = x.Status,
+                    UserId = x.UserId
                 })
                 .SearchByName(parameters.Name ?? string.Empty)
                 .SearchStatus(parameters.Status)
+                .Where(x => x.UserId == _identityConfig.UserId)
                 .OrderBy(x => x.Name);
 
         var todoListSelects = await query
@@ -45,12 +47,11 @@ public class TodoListRepository : ITodoListRepository
         return new PagedList<TodoListSelect>(todoListSelects, count, parameters.PageNumber, parameters.PageSize);
     }
 
-    public async Task<TodoList> GetByIdAsync(int id)
+    public async Task<TodoList?> GetByIdAsync(int id)
     {
         return await _context.TodoLists.AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id 
-            && x.UserId == _identityConfig.UserId) 
-            ?? new TodoList();
+            && x.UserId == _identityConfig.UserId);
     }
 
     public async Task CreateAsync(TodoList todoList)

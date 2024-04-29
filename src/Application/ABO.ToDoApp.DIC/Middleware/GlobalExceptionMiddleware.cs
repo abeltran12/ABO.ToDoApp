@@ -25,16 +25,16 @@ namespace ABO.ToDoApp.DIC.Middleware
                         Errors = badRequestException.Errors!,
                     };
                     break;
-                //case Application.Exceptions.NotFoundException NotFound:
-                //    statusCode = HttpStatusCode.NotFound;
-                //    problem = new CustomProblemDetail
-                //    {
-                //        Title = NotFound.Message,
-                //        Status = (int)statusCode,
-                //        Type = nameof(Application.Exceptions.NotFoundException),
-                //        Detail = NotFound.InnerException?.Message
-                //    };
-                //    break;
+                case Application.Exceptions.NotFoundException NotFound:
+                    statusCode = HttpStatusCode.NotFound;
+                    problem = new CustomProblemDetail
+                    {
+                        Title = NotFound.Message,
+                        Status = (int)statusCode,
+                        Type = nameof(Application.Exceptions.NotFoundException),
+                        Detail = NotFound.InnerException?.Message
+                    };
+                    break;
                 default:
                     problem = new CustomProblemDetail
                     {

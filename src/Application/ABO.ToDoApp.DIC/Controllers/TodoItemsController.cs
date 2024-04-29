@@ -1,40 +1,43 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ABO.ToDoApp.DIC.Controllers;
+namespace ABO.ToDoApp.DIC.Controllers
+{
+    [Route("api/todolists/{todolistId}/todoitem")]
+    [ApiController]
+    public class TodoItemsController : ControllerBase
+    {
+        // GET: api/<TodoItemsController>
+        [HttpGet]
+        public IEnumerable<string> Get(int todolistId)
+        {
+            return new string[] { "value1", "value2" };
+        }
 
-//[Authorize]
-//[Route("api/todolists/{todoListId}/todoitems")]
-//[ApiController]
-//public class TodoItemsController : ControllerBase
-//{
-//    private readonly IMediator _mediator;
+        // GET api/<TodoItemsController>/5
+        [HttpGet("{id}")]
+        public string Get(int todolistId, int id)
+        {
+            return "value";
+        }
 
-//    public TodoItemsController(IMediator mediator)
-//    {
-//        _mediator = mediator;
-//    }
+        // POST api/<TodoItemsController>
+        [HttpPost]
+        public void Post(int todolistId,[FromBody] string value)
+        {
+        }
 
-//    //[HttpGet(Name = "GetById")]
-//    //public async Task<IActionResult> GetById(int todoListId)
-//    //{
-//    //    return Ok();
-//    //}
+        // PUT api/<TodoItemsController>/5
+        [HttpPut("{id}")]
+        public void Put(int todolistId, int id, [FromBody] string value)
+        {
+        }
 
-//    //// POST api/<TodoItemsController>
-//    //[HttpPost]
-//    //public async Task<IActionResult> Post(int todoListId, [FromBody] CreateTodoItem request)
-//    //{
-//    //    var response = await _mediator.Send(
-//    //        new CreateTodoItemRequest 
-//    //        { 
-//    //            Title = request.Title,
-//    //            Description = request.Description,
-//    //            Duedate = request.Duedate,
-//    //            TodoListId = todoListId
-//    //        });
-//    //    return CreatedAtRoute(nameof(GetById), new { id = response.Data!.Id, message = response.Message }, response);
-//    //}
-//}
+        // DELETE api/<TodoItemsController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int todolistId, int id)
+        {
+        }
+    }
+}

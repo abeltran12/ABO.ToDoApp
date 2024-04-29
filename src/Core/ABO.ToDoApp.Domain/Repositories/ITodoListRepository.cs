@@ -7,7 +7,7 @@ namespace ABO.ToDoApp.Domain.Repositories;
 public interface ITodoListRepository
 {
     Task<PagedList<TodoListSelect>> GetAll(TodoListParameters todoListParameters);
-    Task<TodoList> GetByIdAsync(int id);
+    Task<TodoList?> GetByIdAsync(int id);
     Task CreateAsync(TodoList todoList);
     void Update(TodoList todoList);
     void Delete(TodoList todoList);

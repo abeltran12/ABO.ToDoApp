@@ -11,4 +11,6 @@ public class TodoListSelect
     public Status Status { get; set; }
 
     public string StatusDecription { get; set; } = string.Empty;
+
+    public string UserId { get; set; } = string.Empty;
 }

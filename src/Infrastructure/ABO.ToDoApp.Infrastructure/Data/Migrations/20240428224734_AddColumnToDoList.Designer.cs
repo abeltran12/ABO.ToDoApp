@@ -4,6 +4,7 @@ using ABO.ToDoApp.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABO.ToDoApp.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ToDoAppContext))]
-    partial class ToDoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240428224734_AddColumnToDoList")]
+    partial class AddColumnToDoList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,10 +1,15 @@
 ﻿using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ABO.ToDoApp.Application.Feautures.TodoList.Create;
+namespace ABO.ToDoApp.Application.Feautures.TodoList.Update;
 
-public class CreateTodoListRequestValidator : AbstractValidator<CreateTodoListRequest>
+public class UpdateTodoListRequestValidator : AbstractValidator<UpdateTodoListRequest>
 {
-    public CreateTodoListRequestValidator()
+    public UpdateTodoListRequestValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required.")
