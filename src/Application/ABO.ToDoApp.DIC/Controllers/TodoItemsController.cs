@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ABO.ToDoApp.DIC.Controllers
 {
+    [Authorize(Policy = "OwnerOfTodoListPolicy")]
     [Route("api/todolists/{todolistId}/todoitem")]
     [ApiController]
     public class TodoItemsController : ControllerBase

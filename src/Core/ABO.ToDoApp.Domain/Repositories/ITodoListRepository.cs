@@ -10,5 +10,4 @@ public interface ITodoListRepository
     Task<TodoList?> GetByIdAsync(int id);
     Task CreateAsync(TodoList todoList);
     void Update(TodoList todoList);
-    void Delete(TodoList todoList);
 }

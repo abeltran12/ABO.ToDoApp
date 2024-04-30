@@ -64,9 +64,4 @@ public class TodoListRepository : ITodoListRepository
         _context.TodoLists.Update(todoList);
     }
 
-    public void Delete(TodoList todoList)
-    {
-        _context.TodoLists.Update(todoList);
-    }
-
 }

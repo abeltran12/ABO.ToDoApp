@@ -9,5 +9,4 @@ public interface ITodoItemRepository
     Task<TodoItem> GetByIdAsync(int id, string userId);
     Task CreateAsync(TodoItem item);
     void Update(TodoItem item);
-    void DeleteRange(List<TodoItem> items);
 }

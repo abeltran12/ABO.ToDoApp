@@ -3,11 +3,13 @@ using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Infrastructure.Data.DbContexts;
+using ABO.ToDoApp.Infrastructure.Data.Interceptors;
 using ABO.ToDoApp.Infrastructure.Data.Repositories;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
 using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -94,6 +96,16 @@ public static class ServiceExtensions
 
             return identityOptions;
         });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("OwnerOfTodoListPolicy", policy =>
+            {
+                policy.Requirements.Add(new OwnerOfTodoListRequirement());
+            });
+        });
+
+        services.AddTransient<IAuthorizationHandler, OwnerOfTodoListHandler>();
     }
 
 }

@@ -1,5 +1,7 @@
 using ABO.ToDoApp.DIC;
 using ABO.ToDoApp.DIC.Middleware;
+using ABO.ToDoApp.Infrastructure.Data.Interceptors;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.ConfigureIdentity();
 builder.Services.AddApplicationDependencies();
 builder.Services.ConfigureAuthService(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

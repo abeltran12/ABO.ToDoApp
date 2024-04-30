@@ -36,9 +36,4 @@ public class TodoItemRepository : ITodoItemRepository
     {
         _context.TodoItems.Update(item);
     }
-
-    public void DeleteRange(List<TodoItem> items)
-    {
-        _context.UpdateRange(items);
-    }
 }

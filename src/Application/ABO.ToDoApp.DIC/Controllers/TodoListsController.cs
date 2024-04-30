@@ -3,7 +3,10 @@ using ABO.ToDoApp.Application.Feautures.TodoList.Delete;
 using ABO.ToDoApp.Application.Feautures.TodoList.Get;
 using ABO.ToDoApp.Application.Feautures.TodoList.GetById;
 using ABO.ToDoApp.Application.Feautures.TodoList.Update;
+using ABO.ToDoApp.DIC.Models;
 using ABO.ToDoApp.DIC.Models.TodoLists;
+using ABO.ToDoApp.Domain.RequestFilters;
+using ABO.ToDoApp.Shared.Models.TodoList;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +30,8 @@ namespace ABO.ToDoApp.DIC.Controllers
 
         // GET: api/<TodoListsController>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<GetAllTodoListResponse>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
         public async Task<IActionResult> Get([FromQuery] SelectTodoListParameters parameters)
         {
             var (todoLists, metaData) = await _mediator.Send(
