@@ -2,6 +2,7 @@
 using ABO.ToDoApp.Domain.Models;
 using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Infrastructure.Data.DbContexts;
+using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ABO.ToDoApp.Infrastructure.Data.Repositories;
@@ -15,14 +16,28 @@ public class TodoItemRepository : ITodoItemRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<TodoItemSelect>> GetAll(int idTodoList, string userId)
+    public async Task<IEnumerable<TodoItemSelect>> GetAll(int idTodoList)
     {
-        return 
-            (IEnumerable<TodoItemSelect>)await _context.TodoItems.Where
-                (x => x.TodoListId == idTodoList && x.TodoList!.UserId == userId).ToListAsync();
+        return
+            await _context.TodoItems.AsNoTracking()
+            .Select(x => new TodoItemSelect
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Status = x.Status,
+                StatusDecription = StatusHelper.GetStatusString(x.Status),
+                TodoListId = x.TodoListId
+            }).Where
+                (x => x.TodoListId == idTodoList).ToListAsync();
     }
 
-    public async Task<TodoItem> GetByIdAsync(int id, string userId)
+    public async Task<int> GetTodoItemsCount(int idTodoList)
+    {
+        return await _context.TodoItems
+            .Where(x => x.TodoListId == idTodoList).CountAsync();
+    }
+
+    public async Task<TodoItem> GetByIdAsync(int id)
     {
         return await _context.TodoItems.FindAsync(id) ?? new TodoItem();
     }

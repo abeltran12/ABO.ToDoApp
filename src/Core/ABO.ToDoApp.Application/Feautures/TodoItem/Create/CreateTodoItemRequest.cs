@@ -2,7 +2,7 @@
 using ABO.ToDoApp.Shared.Models.TodoList;
 using MediatR;
 
-namespace ABO.ToDoApp.Application.Feautures.TodoItem;
+namespace ABO.ToDoApp.Application.Feautures.TodoItem.Create;
 
 public class CreateTodoItemRequest : IRequest<ActionsResponse<CreateTodoItemResponse>>
 {

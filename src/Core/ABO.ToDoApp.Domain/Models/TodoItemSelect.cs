@@ -9,4 +9,8 @@ public class TodoItemSelect
     public string Title { get; set; } = string.Empty;
 
     public Status Status { get; set; }
+
+    public string StatusDecription { get; set; } = string.Empty;
+
+    public int TodoListId { get; set; }
 }

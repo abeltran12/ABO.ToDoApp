@@ -76,7 +76,9 @@ namespace ABO.ToDoApp.DIC.Controllers
                         Description = request.Description
                     });
 
-            return CreatedAtRoute(nameof(GetById), new { id = response.Data!.Id, message = response.Message }, response);
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response.Message));
+
+            return CreatedAtRoute(nameof(GetById), new { id = response.Data!.Id }, response.Data);
         }
 
         // PUT api/<TodoListsController>/5
@@ -94,7 +96,9 @@ namespace ABO.ToDoApp.DIC.Controllers
                         Description = request.Description
                     });
 
-            return Ok(response);
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response.Message));
+
+            return NoContent();
         }
 
         // DELETE api/<TodoListsController>/5
@@ -110,7 +114,9 @@ namespace ABO.ToDoApp.DIC.Controllers
                         Id = id
                     });
 
-            return Ok(response);
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response.Message));
+
+            return NoContent();
         }
     }
 }

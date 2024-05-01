@@ -5,8 +5,9 @@ namespace ABO.ToDoApp.Domain.Repositories;
 
 public interface ITodoItemRepository
 {
-    Task<IEnumerable<TodoItemSelect>> GetAll(int idTodoList, string userId);
-    Task<TodoItem> GetByIdAsync(int id, string userId);
+    Task<IEnumerable<TodoItemSelect>> GetAll(int idTodoList);
+    Task<int> GetTodoItemsCount(int idTodoList);
+    Task<TodoItem> GetByIdAsync(int id);
     Task CreateAsync(TodoItem item);
     void Update(TodoItem item);
 }
