@@ -24,10 +24,24 @@ public class DeleteTodoListHandler : IRequestHandler<DeleteTodoListRequest, Acti
 
         response.Status = Domain.Entities.Status.Deleted;
 
-        //falta borrar los items, para cuando lo otro se complete
         _unitofwork.TodoListRepository.Update(response);
+        await DeleteTodoItems(request.Id);
         await _unitofwork.SaveAsync();
 
         return new ActionsResponse<bool> { Data = true, Message = TodoListMessageConstants.SuccessMessage };
+    }
+
+    private async Task DeleteTodoItems(int todoListId)
+    {
+        var todoItems = await _unitofwork.TodoItemRepository.GetAllForUpdate(todoListId);
+
+        todoItems.ForEach(item => 
+                { 
+                    item.Status = Domain.Entities.Status.Deleted;
+                });
+
+        _unitofwork.TodoItemRepository.UpdateAll(todoItems);
+
+        return;
     }
 }

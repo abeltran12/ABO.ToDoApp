@@ -31,6 +31,12 @@ public class TodoItemRepository : ITodoItemRepository
                 (x => x.TodoListId == idTodoList).ToListAsync();
     }
 
+    public async Task<List<TodoItem>> GetAllForUpdate(int idTodoList)
+    {
+        return await _context.TodoItems.Where
+                (x => x.TodoListId == idTodoList).ToListAsync();
+    }
+
     public async Task<int> GetTodoItemsCount(int idTodoList)
     {
         return await _context.TodoItems
@@ -51,5 +57,10 @@ public class TodoItemRepository : ITodoItemRepository
     public void Update(TodoItem item)
     {
         _context.TodoItems.Update(item);
+    }
+
+    public void UpdateAll(List<TodoItem> items)
+    {
+        _context.TodoItems.UpdateRange(items);
     }
 }
