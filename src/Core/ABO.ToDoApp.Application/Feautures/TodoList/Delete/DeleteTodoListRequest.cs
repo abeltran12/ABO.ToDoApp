@@ -1,9 +1,8 @@
-﻿using ABO.ToDoApp.Shared.Models.TodoList;
-using MediatR;
+﻿using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Delete;
 
-public class DeleteTodoListRequest : IRequest<ActionsResponse<bool>>
+public class DeleteTodoListRequest : IRequest<string>
 {
     public int Id { get; set; }
 }

@@ -8,7 +8,7 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Update;
 
-public class UpdateTodoListHandler : IRequestHandler<UpdateTodoListRequest, ActionsResponse<bool>>
+public class UpdateTodoListHandler : IRequestHandler<UpdateTodoListRequest, string>
 {
     private readonly IMapper _mapper;
     private readonly IUnitofwork _unitofwork;
@@ -19,7 +19,7 @@ public class UpdateTodoListHandler : IRequestHandler<UpdateTodoListRequest, Acti
         _unitofwork = unitofwork;
     }
 
-    public async Task<ActionsResponse<bool>> Handle(UpdateTodoListRequest request, CancellationToken cancellationToken)
+    public async Task<string> Handle(UpdateTodoListRequest request, CancellationToken cancellationToken)
     {
         var validator = new UpdateTodoListRequestValidator();
         var validatorResult = await validator.ValidateAsync(request, cancellationToken);
@@ -36,6 +36,6 @@ public class UpdateTodoListHandler : IRequestHandler<UpdateTodoListRequest, Acti
         _unitofwork.TodoListRepository.Update(response);
         await _unitofwork.SaveAsync();
 
-        return new ActionsResponse<bool> { Data = true, Message = TodoListMessageConstants.SuccessMessage };
+        return TodoListMessageConstants.SuccessMessage;
     }
 }

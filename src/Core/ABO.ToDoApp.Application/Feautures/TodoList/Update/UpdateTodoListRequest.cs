@@ -1,9 +1,8 @@
-﻿using ABO.ToDoApp.Shared.Models.TodoList;
-using MediatR;
+﻿using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Update;
 
-public class UpdateTodoListRequest : IRequest<ActionsResponse<bool>>
+public class UpdateTodoListRequest : IRequest<string>
 {
     public int Id { get; set; }
 

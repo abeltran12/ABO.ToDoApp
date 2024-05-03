@@ -53,9 +53,9 @@ namespace ABO.ToDoApp.DIC.Controllers
 
         // GET api/<TodoListsController>/5
         [HttpGet("{id:int}", Name = "GetById")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetByIdTodoListResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
         public async Task<IActionResult> GetById(int id)
         {
             var response = await _mediator.Send(new GetByIdTodoListRequest { Id = id });
@@ -64,9 +64,9 @@ namespace ABO.ToDoApp.DIC.Controllers
 
         // POST api/<TodoListsController>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateTodoListResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
         public async Task<IActionResult> Post([FromBody] CreateTodoList request)
         {
             var response = await _mediator.Send(
@@ -84,8 +84,8 @@ namespace ABO.ToDoApp.DIC.Controllers
         // PUT api/<TodoListsController>/5
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateTodoList request)
         {
             var response = await _mediator.Send(
@@ -96,7 +96,7 @@ namespace ABO.ToDoApp.DIC.Controllers
                         Description = request.Description
                     });
 
-            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response.Message));
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response));
 
             return NoContent();
         }
@@ -104,8 +104,8 @@ namespace ABO.ToDoApp.DIC.Controllers
         // DELETE api/<TodoListsController>/5
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _mediator.Send(
@@ -114,7 +114,7 @@ namespace ABO.ToDoApp.DIC.Controllers
                         Id = id
                     });
 
-            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response.Message));
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response));
 
             return NoContent();
         }

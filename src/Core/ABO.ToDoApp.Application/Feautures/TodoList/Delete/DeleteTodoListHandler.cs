@@ -1,12 +1,11 @@
 ﻿using ABO.ToDoApp.Application.Exceptions;
 using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Shared.Constants.TodoLists;
-using ABO.ToDoApp.Shared.Models.TodoList;
 using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Delete;
 
-public class DeleteTodoListHandler : IRequestHandler<DeleteTodoListRequest, ActionsResponse<bool>>
+public class DeleteTodoListHandler : IRequestHandler<DeleteTodoListRequest, string>
 {
     private readonly IUnitofwork _unitofwork;
 
@@ -15,7 +14,7 @@ public class DeleteTodoListHandler : IRequestHandler<DeleteTodoListRequest, Acti
         _unitofwork = unitofwork;
     }
 
-    public async Task<ActionsResponse<bool>> Handle(DeleteTodoListRequest request, CancellationToken cancellationToken)
+    public async Task<string> Handle(DeleteTodoListRequest request, CancellationToken cancellationToken)
     {
         var response = await _unitofwork.TodoListRepository.GetByIdAsync(request.Id);
 
@@ -28,7 +27,7 @@ public class DeleteTodoListHandler : IRequestHandler<DeleteTodoListRequest, Acti
         await DeleteTodoItems(request.Id);
         await _unitofwork.SaveAsync();
 
-        return new ActionsResponse<bool> { Data = true, Message = TodoListMessageConstants.SuccessMessage };
+        return TodoListMessageConstants.SuccessMessage;
     }
 
     private async Task DeleteTodoItems(int todoListId)
