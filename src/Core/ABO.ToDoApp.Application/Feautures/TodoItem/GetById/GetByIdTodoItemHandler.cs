@@ -19,7 +19,8 @@ public class GetByIdTodoItemHandler : IRequestHandler<GetByIdTodoItemRequest, Ge
 
     public async Task<GetByIdTodoItemResponse> Handle(GetByIdTodoItemRequest request, CancellationToken cancellationToken)
     {
-        var response = await _unitofwork.TodoItemRepository.GetByIdAsync(request.Id);
+        var response = 
+            await _unitofwork.TodoItemRepository.GetByIdAsync(request.TodolistId, request.Id);
 
         if (response == null)
             throw new NotFoundException("TodoItem", request.Id);

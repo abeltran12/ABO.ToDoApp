@@ -18,9 +18,4 @@
     <ProjectReference Include="..\ABO.ToDoApp.Domain\ABO.ToDoApp.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Feautures\TodoItem\Delete\" />
-    <Folder Include="Feautures\TodoItem\Update\" />
-  </ItemGroup>
-
 </Project>

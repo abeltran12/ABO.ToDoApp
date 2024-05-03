@@ -1,6 +1,10 @@
 ﻿using ABO.ToDoApp.Application.Feautures.TodoItem.Create;
+using ABO.ToDoApp.Application.Feautures.TodoItem.Delete;
 using ABO.ToDoApp.Application.Feautures.TodoItem.Get;
 using ABO.ToDoApp.Application.Feautures.TodoItem.GetById;
+using ABO.ToDoApp.Application.Feautures.TodoItem.Update;
+using ABO.ToDoApp.Application.Feautures.TodoList.Delete;
+using ABO.ToDoApp.Application.Feautures.TodoList.Update;
 using ABO.ToDoApp.DIC.Models.TodoItems;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +16,7 @@ using System.Text.Json;
 namespace ABO.ToDoApp.DIC.Controllers
 {
     [Authorize(Policy = "OwnerOfTodoListPolicy")]
-    [Route("api/todolists/{todolistId}/todoitem")]
+    [Route("api/todolists/{todolistId}/todoitems")]
     [ApiController]
     public class TodoItemsController : ControllerBase
     {
@@ -78,8 +82,22 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public void Put(int todolistId, int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int todolistId, int id, [FromBody] UpdateTodoItem request)
         {
+            var response = await _mediator.Send(
+                    new UpdateTodoItemRequest
+                    {
+                        Id = id,
+                        Title = request.Title,
+                        Description = request.Description,
+                        Duedate = request.Duedate,
+                        Status = (Domain.Entities.Status)request.Status,
+                        TodoListId = todolistId
+                    });
+
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response));
+
+            return NoContent();
         }
 
         // DELETE api/<TodoItemsController>/5
@@ -87,8 +105,18 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public void Delete(int todolistId, int id)
+        public async Task<IActionResult> Delete(int todolistId, int id)
         {
+            var response = await _mediator.Send(
+                    new DeleteTodoItemRequest
+                    {
+                        Id = id,
+                        TodolistId = todolistId
+                    });
+
+            Response.Headers.Append("X-Message", JsonSerializer.Serialize(response));
+
+            return NoContent();
         }
     }
 }

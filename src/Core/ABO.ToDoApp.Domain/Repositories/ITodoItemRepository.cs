@@ -7,7 +7,7 @@ public interface ITodoItemRepository
 {
     Task<IEnumerable<TodoItemSelect>> GetAll(int idTodoList);
     Task<int> GetTodoItemsCount(int idTodoList);
-    Task<TodoItem> GetByIdAsync(int id);
+    Task<TodoItem> GetByIdAsync(int idTodoList, int id);
     Task CreateAsync(TodoItem item);
     void Update(TodoItem item);
 }

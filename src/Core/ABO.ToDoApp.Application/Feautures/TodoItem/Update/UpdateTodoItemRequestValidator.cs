@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
 
-namespace ABO.ToDoApp.Application.Feautures.TodoItem.Create;
+namespace ABO.ToDoApp.Application.Feautures.TodoItem.Update;
 
-public class CreateTodoItemRequestValidator : AbstractValidator<CreateTodoItemRequest>
+public class UpdateTodoItemRequestValidator : AbstractValidator<UpdateTodoItemRequest>
 {
-
-    public CreateTodoItemRequestValidator()
+    public UpdateTodoItemRequestValidator()
     {
         RuleFor(x => x.Title)
             .NotEmpty().WithMessage("Title is required.")
@@ -21,6 +20,8 @@ public class CreateTodoItemRequestValidator : AbstractValidator<CreateTodoItemRe
             .NotEmpty().WithMessage("Due date cannot be empty.")
             .Must(date => date >= DateOnly.FromDateTime(DateTime.Today)).WithMessage("Due date must be greater or equal than today.");
 
+        RuleFor(x => x.Status)
+            .NotEmpty().WithMessage("Status cannot be empty.")
+            .NotNull().WithMessage("Status cannot be null.");
     }
-
 }

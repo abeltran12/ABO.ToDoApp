@@ -37,9 +37,10 @@ public class TodoItemRepository : ITodoItemRepository
             .Where(x => x.TodoListId == idTodoList).CountAsync();
     }
 
-    public async Task<TodoItem> GetByIdAsync(int id)
+    public async Task<TodoItem> GetByIdAsync(int idTodoList, int id)
     {
-        return await _context.TodoItems.FindAsync(id) ?? new TodoItem();
+        return await _context.TodoItems.Where(x => x.Id == id 
+            && x.TodoListId == x.TodoListId).FirstOrDefaultAsync() ?? new TodoItem();
     }
 
     public async Task CreateAsync(TodoItem item)

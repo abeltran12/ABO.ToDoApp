@@ -2,7 +2,6 @@
 using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Shared.Constants.TodoLists;
 using ABO.ToDoApp.Shared.Models.TodoList;
-using AutoMapper;
 using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Delete;

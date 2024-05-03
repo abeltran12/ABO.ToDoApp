@@ -1,4 +1,5 @@
 ﻿using ABO.ToDoApp.Application.Feautures.TodoItem.Create;
+using ABO.ToDoApp.Application.Feautures.TodoItem.Update;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Domain.Models;
 using ABO.ToDoApp.Shared.Models.TodoItem;
@@ -19,5 +20,7 @@ public class TodoItemProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusDecription));
 
         CreateMap<TodoItem, GetByIdTodoItemResponse>();
+
+        CreateMap<UpdateTodoItemRequest, TodoItem>();
     }
 }
