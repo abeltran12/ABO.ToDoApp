@@ -1,4 +1,5 @@
-﻿using ABO.ToDoApp.Infrastructure.Data.DbContexts;
+﻿using ABO.ToDoApp.Application.Exceptions;
+using ABO.ToDoApp.Infrastructure.Data.DbContexts;
 using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,9 +32,12 @@ public class OwnerOfTodoListHandler : AuthorizationHandler<OwnerOfTodoListRequir
         var userId = _identityConfig.UserId;
         var todoList = await _context.TodoLists.FindAsync(todoListId);
 
-        if (todoList != null && todoList.UserId == userId)
+        if (todoList != null)
         {
-            context.Succeed(requirement);
+            if (todoList.UserId == userId)
+                context.Succeed(requirement);
         }
+        else
+            throw new NotFoundException("TodoList", todoListId);
     }
 }

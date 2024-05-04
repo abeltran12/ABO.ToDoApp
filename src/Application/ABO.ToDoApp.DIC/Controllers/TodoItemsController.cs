@@ -33,6 +33,7 @@ namespace ABO.ToDoApp.DIC.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetTodoItemsListResponse>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
         public async Task<IActionResult> Get(int todolistId)
         {
             var response = 

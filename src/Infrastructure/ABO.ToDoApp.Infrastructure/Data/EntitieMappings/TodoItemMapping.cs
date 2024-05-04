@@ -35,6 +35,9 @@ public class TodoItemMapping : IEntityTypeConfiguration<TodoItem>
             .Property(x => x.TodoListId)
             .IsRequired();
 
+        builder
+            .HasQueryFilter(g => g.Status != Status.Deleted);
+
         //Shadow property
         builder.Property<DateTime>("CreationDate")
             .IsRequired().HasColumnName("CreationDate");

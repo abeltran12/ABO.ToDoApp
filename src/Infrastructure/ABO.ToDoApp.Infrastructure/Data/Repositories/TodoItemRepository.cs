@@ -2,7 +2,6 @@
 using ABO.ToDoApp.Domain.Models;
 using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Infrastructure.Data.DbContexts;
-using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ABO.ToDoApp.Infrastructure.Data.Repositories;
@@ -41,6 +40,13 @@ public class TodoItemRepository : ITodoItemRepository
     {
         return await _context.TodoItems
             .Where(x => x.TodoListId == idTodoList).CountAsync();
+    }
+
+    public async Task<int> GetTodoItemsCompletedCount(int idTodoList)
+    {
+        return await _context.TodoItems
+            .Where(x => x.TodoListId == idTodoList 
+                && x.Status == Status.Completed).CountAsync();
     }
 
     public async Task<TodoItem> GetByIdAsync(int idTodoList, int id)
