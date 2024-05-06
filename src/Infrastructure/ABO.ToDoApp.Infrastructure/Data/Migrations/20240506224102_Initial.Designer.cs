@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABO.ToDoApp.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ToDoAppContext))]
-    [Migration("20240423171920_UserIdEdit")]
-    partial class UserIdEdit
+    [Migration("20240506224102_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,11 @@ namespace ABO.ToDoApp.Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreationDate");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar");
 
                     b.Property<string>("Name")
                         .IsRequired()

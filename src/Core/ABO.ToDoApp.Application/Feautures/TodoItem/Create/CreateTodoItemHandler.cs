@@ -1,14 +1,13 @@
 ﻿using ABO.ToDoApp.Application.Exceptions;
-using ABO.ToDoApp.Application.Feautures.TodoList.Create;
-using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Domain.Repositories;
+using ABO.ToDoApp.Shared.Constants.GenericMessages;
 using ABO.ToDoApp.Shared.Constants.TodoItems;
 using ABO.ToDoApp.Shared.Constants.TodoLists;
-using ABO.ToDoApp.Shared.Identity.Models;
 using ABO.ToDoApp.Shared.Models.TodoItem;
 using ABO.ToDoApp.Shared.Models.TodoList;
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoItem.Create;
 
@@ -16,15 +15,21 @@ public class CreateTodoItemHandler : IRequestHandler<CreateTodoItemRequest, Acti
 {
     private readonly IMapper _mapper;
     private readonly IUnitofwork _unitofwork;
+    private readonly ILogger<CreateTodoItemHandler> _logger;
 
-    public CreateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork)
+    public CreateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork, ILogger<CreateTodoItemHandler> logger)
     {
         _mapper = mapper;
         _unitofwork = unitofwork;
+        _logger = logger;
     }
 
     public async Task<ActionsResponse<CreateTodoItemResponse>> Handle(CreateTodoItemRequest request, CancellationToken cancellationToken)
     {
+        _logger
+            .LogInformation(GenericMessageConstants.ExecutingMessage
+                + " {Request}", nameof(CreateTodoItemHandler));
+
         await Validations(request, cancellationToken);
 
         var todoItem = _mapper.Map<Domain.Entities.TodoItem>(request);
@@ -33,6 +38,9 @@ public class CreateTodoItemHandler : IRequestHandler<CreateTodoItemRequest, Acti
         await _unitofwork.SaveAsync();
 
         var responseData = _mapper.Map<CreateTodoItemResponse>(todoItem);
+
+        _logger.LogInformation(GenericMessageConstants.ExecutingMessage
+                + " {Request} " + GenericMessageConstants.ProcessedMessage, nameof(CreateTodoItemHandler));
 
         return new ActionsResponse<CreateTodoItemResponse>
         {

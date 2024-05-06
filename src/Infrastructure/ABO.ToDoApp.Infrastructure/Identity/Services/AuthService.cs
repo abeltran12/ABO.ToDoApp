@@ -4,9 +4,8 @@ using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Shared.Identity.Models;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,18 +20,22 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly IOptions<JwtConfiguration> _jwtSettings;
+    private readonly ILogger<AuthService> _logger;
 
-    public AuthService(UserManager<User> userManager, 
-            SignInManager<User> signInManager, 
-            IOptions<JwtConfiguration> jwtSettings)
+    public AuthService(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IOptions<JwtConfiguration> jwtSettings,
+            ILogger<AuthService> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _jwtSettings = jwtSettings;
+        _logger = logger;
     }
 
     public async Task<RegisterUserResponse> RegisterUser(User user, string password)
     {
+        _logger.LogInformation("Executing {Request}", nameof(RegisterUser));
         var userExists = await _userManager.FindByEmailAsync(user.Email!);
 
         if (userExists != null)
@@ -43,11 +46,15 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
             throw new BadRequestException("Register request invalid.", result.Errors);
 
+        _logger.LogInformation("Executing {Request} processed succefully", nameof(RegisterUser));
+
         return new RegisterUserResponse();
     }
 
     public async Task<TokenResponse> ValidateUser(LoginUserRequest request)
     {
+        _logger.LogInformation("Executing {Request}", nameof(ValidateUser));
+
         var user = await _userManager.FindByEmailAsync(request.Email!) ?? throw new NotFoundException("email", request.Email!);
         var isSignInValid = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
@@ -56,16 +63,23 @@ public class AuthService : IAuthService
 
         var tokenResponse = await CreateToken(user);
 
+        _logger.LogInformation("Executing {Request} processed succefully", nameof(ValidateUser));
+
         return tokenResponse;
     }
 
     private async Task<TokenResponse> CreateToken(User user)
     {
+        _logger.LogInformation("Executing {Request}", nameof(CreateToken));
+
         var signingCredentials = GetSigningCredentials();
         var claims = await GetClaims(user);
         var expirationDate = DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.Value.Expires));
         var tokenOptions = GenerateTokenOptions(signingCredentials, claims, expirationDate);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+        _logger.LogInformation("Executing {Request} processed succefully", nameof(ValidateUser));
+
         return new TokenResponse { Token = accessToken, ExpirationDate = expirationDate};
     }
 

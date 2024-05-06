@@ -1,12 +1,22 @@
 ﻿using ABO.ToDoApp.DIC.Models;
 using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace ABO.ToDoApp.DIC.Middleware
 {
     public class GlobalExceptionMiddleware : IExceptionHandler
     {
-        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+        private readonly ILogger<GlobalExceptionMiddleware> _logger;
+
+        public GlobalExceptionMiddleware(ILogger<GlobalExceptionMiddleware> logger)
+        {
+            _logger = logger;
+        }
+
+        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, 
+            Exception exception,
+            CancellationToken cancellationToken)
         {
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             httpContext.Response.ContentType = "application/json";
@@ -47,8 +57,8 @@ namespace ABO.ToDoApp.DIC.Middleware
             }
 
             httpContext.Response.StatusCode = (int)statusCode;
-            //var logMessage = JsonConvert.SerializeObject(problem);
-            //_logger.LogError(logMessage);
+            var logMessage = JsonConvert.SerializeObject(problem);
+            _logger.LogError(logMessage);
             await httpContext.Response.WriteAsJsonAsync(problem);
 
             return true;
