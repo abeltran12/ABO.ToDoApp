@@ -12,9 +12,10 @@ builder.Host.UseSerilog((context, loggerConfig) =>
 
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureIdentity();
+builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();
 builder.Services.AddApplicationDependencies();
 builder.Services.ConfigureAuthService(builder.Configuration);
-builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();
+
 
 
 builder.Services.AddControllers();

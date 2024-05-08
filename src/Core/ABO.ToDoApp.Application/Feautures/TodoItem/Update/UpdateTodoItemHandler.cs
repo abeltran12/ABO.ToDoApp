@@ -1,11 +1,9 @@
 ﻿using ABO.ToDoApp.Application.Exceptions;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Domain.Repositories;
-using ABO.ToDoApp.Shared.Constants.GenericMessages;
 using ABO.ToDoApp.Shared.Constants.TodoItems;
 using AutoMapper;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoItem.Update;
 
@@ -13,21 +11,15 @@ public class UpdateTodoItemHandler : IRequestHandler<UpdateTodoItemRequest, stri
 {
     private readonly IMapper _mapper;
     private readonly IUnitofwork _unitofwork;
-    private readonly ILogger<UpdateTodoItemHandler> _logger;
 
-    public UpdateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork, ILogger<UpdateTodoItemHandler> logger)
+    public UpdateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork)
     {
         _mapper = mapper;
         _unitofwork = unitofwork;
-        _logger = logger;
     }
 
     public async Task<string> Handle(UpdateTodoItemRequest request, CancellationToken cancellationToken)
     {
-        _logger
-            .LogInformation(GenericMessageConstants.ExecutingMessage
-                + " {Request}", nameof(UpdateTodoItemHandler));
-
         await ModelValidations(request, cancellationToken);
         Domain.Entities.TodoItem response = await ValidateExistenceAndStatusRule(request);
 
@@ -37,9 +29,6 @@ public class UpdateTodoItemHandler : IRequestHandler<UpdateTodoItemRequest, stri
         await ReviewStatusCompleted(request);
 
         await _unitofwork.SaveAsync();
-
-        _logger.LogInformation(GenericMessageConstants.ExecutingMessage
-            + " {Request} " + GenericMessageConstants.ProcessedMessage, nameof(UpdateTodoItemHandler));
 
         return TodoItemMessageConstants.SuccessMessage;
     }

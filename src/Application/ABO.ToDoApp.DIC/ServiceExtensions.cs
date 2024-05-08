@@ -1,4 +1,5 @@
-﻿using ABO.ToDoApp.Application.MappingProfile;
+﻿using ABO.ToDoApp.Application.Behaviors;
+using ABO.ToDoApp.Application.MappingProfile;
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Domain.Repositories;
@@ -8,6 +9,8 @@ using ABO.ToDoApp.Infrastructure.Data.Repositories;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
 using ABO.ToDoApp.Shared.Identity.Models;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +57,10 @@ public static class ServiceExtensions
 
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining(typeof(UserProfile)));
+
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        services.AddValidatorsFromAssembly(typeof(UserProfile).Assembly);
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
 
     public static void ConfigureAuthService(this IServiceCollection services, IConfiguration configuration)

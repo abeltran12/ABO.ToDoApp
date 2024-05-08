@@ -35,6 +35,17 @@ namespace ABO.ToDoApp.DIC.Middleware
                         Errors = badRequestException.Errors!,
                     };
                     break;
+                case Application.Exceptions.ValidationAppException validationException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    problem = new CustomProblemDetail
+                    {
+                        Title = validationException.Message,
+                        Status = (int)statusCode,
+                        Detail = validationException.InnerException?.Message,
+                        Type = nameof(Application.Exceptions.ValidationAppException),
+                        Errors = validationException.Errors!,
+                    };
+                    break;
                 case Application.Exceptions.NotFoundException NotFound:
                     statusCode = HttpStatusCode.NotFound;
                     problem = new CustomProblemDetail
