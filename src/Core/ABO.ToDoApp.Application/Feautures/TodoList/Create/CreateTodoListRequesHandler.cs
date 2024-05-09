@@ -1,5 +1,4 @@
-﻿using ABO.ToDoApp.Application.Exceptions;
-using ABO.ToDoApp.Domain.Repositories;
+﻿using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Shared.Constants.TodoLists;
 using ABO.ToDoApp.Shared.Identity.Models;
 using ABO.ToDoApp.Shared.Models.TodoList;
@@ -25,12 +24,6 @@ public class CreateTodoListRequesHandler : IRequestHandler<CreateTodoListRequest
 
     public async Task<ActionsResponse<CreateTodoListResponse>> Handle(CreateTodoListRequest request, CancellationToken cancellationToken)
     {
-        var validator = new CreateTodoListRequestValidator();
-        var validatorResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (validatorResult.Errors.Count != 0)
-            throw new BadRequestException(TodoListMessageConstants.ErrorMessage, validatorResult);
-
         var todoList = _mapper.Map<Domain.Entities.TodoList>(request);
         todoList.UserId = _identityConfig.UserId!;
 

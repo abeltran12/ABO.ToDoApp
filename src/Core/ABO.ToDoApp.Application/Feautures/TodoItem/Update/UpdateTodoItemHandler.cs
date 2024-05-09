@@ -20,7 +20,6 @@ public class UpdateTodoItemHandler : IRequestHandler<UpdateTodoItemRequest, stri
 
     public async Task<string> Handle(UpdateTodoItemRequest request, CancellationToken cancellationToken)
     {
-        await ModelValidations(request, cancellationToken);
         Domain.Entities.TodoItem response = await ValidateExistenceAndStatusRule(request);
 
         _mapper.Map(request, response);
@@ -46,15 +45,6 @@ public class UpdateTodoItemHandler : IRequestHandler<UpdateTodoItemRequest, stri
             throw new BadRequestException("Cant reopen a completed activity.");
 
         return response;
-    }
-
-    private static async Task ModelValidations(UpdateTodoItemRequest request, CancellationToken cancellationToken)
-    {
-        var validator = new UpdateTodoItemRequestValidator();
-        var validatorResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (validatorResult.Errors.Count != 0)
-            throw new BadRequestException(TodoItemMessageConstants.ErrorMessage, validatorResult);
     }
 
     private async Task ReviewStatusCompleted(UpdateTodoItemRequest request)

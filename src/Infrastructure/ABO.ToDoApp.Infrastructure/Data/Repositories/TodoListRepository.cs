@@ -49,7 +49,7 @@ public class TodoListRepository : ITodoListRepository
 
     public async Task<TodoList?> GetByIdAsync(int id)
     {
-        return await _context.TodoLists.AsNoTracking()
+        return await _context.TodoLists
             .FirstOrDefaultAsync(x => x.Id == id 
             && x.UserId == _identityConfig.UserId);
     }

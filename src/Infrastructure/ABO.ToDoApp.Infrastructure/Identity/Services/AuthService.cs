@@ -36,10 +36,6 @@ public class AuthService : IAuthService
     public async Task<RegisterUserResponse> RegisterUser(User user, string password)
     {
         _logger.LogInformation("Executing {Request}", nameof(RegisterUser));
-        var userExists = await _userManager.FindByEmailAsync(user.Email!);
-
-        if (userExists != null)
-            throw new BadRequestException("Email is already in use.");
 
         var result = await _userManager.CreateAsync(user, password);
 

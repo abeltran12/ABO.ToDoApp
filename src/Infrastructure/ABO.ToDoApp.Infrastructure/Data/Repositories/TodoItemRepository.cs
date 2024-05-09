@@ -38,7 +38,7 @@ public class TodoItemRepository : ITodoItemRepository
 
     public async Task<int> GetTodoItemsCount(int idTodoList)
     {
-        return await _context.TodoItems
+        return await _context.TodoItems.AsNoTracking()
             .Where(x => x.TodoListId == idTodoList).CountAsync();
     }
 

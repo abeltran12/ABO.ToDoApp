@@ -20,12 +20,6 @@ public class UpdateTodoListHandler : IRequestHandler<UpdateTodoListRequest, stri
 
     public async Task<string> Handle(UpdateTodoListRequest request, CancellationToken cancellationToken)
     {
-        var validator = new UpdateTodoListRequestValidator();
-        var validatorResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (validatorResult.Errors.Count != 0)
-            throw new BadRequestException(TodoListMessageConstants.ErrorMessage, validatorResult);
-
         var response = await _unitofwork.TodoListRepository.GetByIdAsync(request.Id);
 
         if (response == null)

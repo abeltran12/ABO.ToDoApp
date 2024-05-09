@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ABO.ToDoApp.Domain.Entities;
+using FluentValidation;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoItem.Update;
 
@@ -22,6 +23,13 @@ public class UpdateTodoItemRequestValidator : AbstractValidator<UpdateTodoItemRe
 
         RuleFor(x => x.Status)
             .NotEmpty().WithMessage("Status cannot be empty.")
-            .NotNull().WithMessage("Status cannot be null.");
+            .NotNull().WithMessage("Status cannot be null.")
+            .Must(BeValidStatus)
+            .WithMessage("Status must be either 1 or 2.");
+    }
+
+    private bool BeValidStatus(Status status)
+    {
+        return status == Status.Active || status == Status.Completed;
     }
 }

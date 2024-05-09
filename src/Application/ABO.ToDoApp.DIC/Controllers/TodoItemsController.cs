@@ -34,6 +34,7 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetTodoItemsListResponse>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
         public async Task<IActionResult> Get(int todolistId)
         {
             var response = 
@@ -47,6 +48,7 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetByIdTodoItemResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
         public async Task<IActionResult> GetTodoItemForTodoList(int todolistId, int id)
         {
             var response = await _mediator.Send(
@@ -64,6 +66,7 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateTodoItemResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
         public async Task<IActionResult> Post(int todolistId,[FromBody] CreateTodoItem request)
         {
             var response = await _mediator.Send(
@@ -85,6 +88,7 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
         public async Task<IActionResult> Put(int todolistId, int id, [FromBody] UpdateTodoItem request)
         {
             var response = await _mediator.Send(
@@ -108,6 +112,7 @@ namespace ABO.ToDoApp.DIC.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomProblemDetail))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(CustomProblemDetail))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
         public async Task<IActionResult> Delete(int todolistId, int id)
         {
             var response = await _mediator.Send(
