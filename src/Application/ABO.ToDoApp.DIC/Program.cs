@@ -14,8 +14,8 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();
 builder.Services.AddApplicationDependencies();
+builder.Services.ConfigureVersioning();
 builder.Services.ConfigureAuthService(builder.Configuration);
-
 
 
 builder.Services.AddControllers();
@@ -53,11 +53,13 @@ var app = builder.Build();
 
 app.UseExceptionHandler(opt => { });
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(s =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
+});
+
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();

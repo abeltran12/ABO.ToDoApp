@@ -9,6 +9,7 @@ using ABO.ToDoApp.Infrastructure.Data.Repositories;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
 using ABO.ToDoApp.Shared.Identity.Models;
+using Asp.Versioning;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -115,4 +116,13 @@ public static class ServiceExtensions
         services.AddTransient<IAuthorizationHandler, OwnerOfTodoListHandler>();
     }
 
+    public static void ConfigureVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(opt =>
+        {
+            opt.ReportApiVersions = true;
+            opt.AssumeDefaultVersionWhenUnspecified = true;
+            opt.DefaultApiVersion = new ApiVersion(1, 0);
+        });
+    }
 }
