@@ -1,11 +1,12 @@
-﻿using ABO.ToDoApp.Application.Exceptions;
+﻿using ABO.ToDoApp.Application.Contracts;
+using ABO.ToDoApp.Application.Exceptions;
 using ABO.ToDoApp.Application.Feautures.Identity.Login;
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
+using ABO.ToDoApp.Infrastructure.Services;
 using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,17 +21,20 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly IOptions<JwtConfiguration> _jwtSettings;
-    private readonly ILogger<AuthService> _logger;
+    private readonly ILoggerAdapter<AuthService> _logger;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public AuthService(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IOptions<JwtConfiguration> jwtSettings,
-            ILogger<AuthService> logger)
+            ILoggerAdapter<AuthService> logger,
+            IDateTimeProvider dateTimeProvider)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _jwtSettings = jwtSettings;
         _logger = logger;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<RegisterUserResponse> RegisterUser(User user, string password)
@@ -70,11 +74,11 @@ public class AuthService : IAuthService
 
         var signingCredentials = GetSigningCredentials();
         var claims = await GetClaims(user);
-        var expirationDate = DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.Value.Expires));
+        var expirationDate = _dateTimeProvider.UtcNow.AddMinutes(Convert.ToDouble(_jwtSettings.Value.Expires));
         var tokenOptions = GenerateTokenOptions(signingCredentials, claims, expirationDate);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-        _logger.LogInformation("Executing {Request} processed succefully", nameof(ValidateUser));
+        _logger.LogInformation("Executing {Request} processed succefully", nameof(CreateToken));
 
         return new TokenResponse { Token = accessToken, ExpirationDate = expirationDate};
     }

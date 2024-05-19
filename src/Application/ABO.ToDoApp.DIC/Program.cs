@@ -15,6 +15,8 @@ builder.Services.ConfigureIdentity();
 builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();
 builder.Services.AddApplicationDependencies();
 builder.Services.ConfigureVersioning();
+builder.Services.ConfigureLogging();
+builder.Services.ConfigureTimeProvider();
 builder.Services.ConfigureAuthService(builder.Configuration);
 
 

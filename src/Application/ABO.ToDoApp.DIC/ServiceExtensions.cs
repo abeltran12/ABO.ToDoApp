@@ -1,4 +1,5 @@
 ﻿using ABO.ToDoApp.Application.Behaviors;
+using ABO.ToDoApp.Application.Contracts;
 using ABO.ToDoApp.Application.MappingProfile;
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
@@ -8,6 +9,8 @@ using ABO.ToDoApp.Infrastructure.Data.Interceptors;
 using ABO.ToDoApp.Infrastructure.Data.Repositories;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
+using ABO.ToDoApp.Infrastructure.Logging;
+using ABO.ToDoApp.Infrastructure.Services;
 using ABO.ToDoApp.Shared.Identity.Models;
 using Asp.Versioning;
 using FluentValidation;
@@ -97,7 +100,7 @@ public static class ServiceExtensions
 
             var identityOptions = new IdentityConfig();
 
-            if (httpContext.User.Identity.IsAuthenticated)
+            if (httpContext!.User.Identity!.IsAuthenticated)
             {
                 identityOptions.UserId = httpContext.User.FindFirstValue("uid") ?? "";
             }
@@ -124,5 +127,15 @@ public static class ServiceExtensions
             opt.AssumeDefaultVersionWhenUnspecified = true;
             opt.DefaultApiVersion = new ApiVersion(1, 0);
         });
+    }
+
+    public static void ConfigureLogging(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+    }
+
+    public static void ConfigureTimeProvider(this IServiceCollection services)
+    {
+        services.AddScoped<IDateTimeProvider, DateTimeProvider>();
     }
 }

@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ABO.ToDoApp.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ABO.ToDoApp.Shared", "src\Application\ABO.ToDoApp.Shared\ABO.ToDoApp.Shared.csproj", "{38A80319-ED17-4F07-9573-E7515E8F97D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABO.ToDoApp.Infrastructure.Tests.Unit", "tests\ABO.ToDoApp.Infrastructure.Tests.Unit\ABO.ToDoApp.Infrastructure.Tests.Unit.csproj", "{843DD2EC-1DEB-44DC-8551-8DA879AB9A84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{38A80319-ED17-4F07-9573-E7515E8F97D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38A80319-ED17-4F07-9573-E7515E8F97D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38A80319-ED17-4F07-9573-E7515E8F97D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{843DD2EC-1DEB-44DC-8551-8DA879AB9A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{843DD2EC-1DEB-44DC-8551-8DA879AB9A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{843DD2EC-1DEB-44DC-8551-8DA879AB9A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{843DD2EC-1DEB-44DC-8551-8DA879AB9A84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{D408ECE2-4C99-454E-BDF9-6CBD160C8195} = {AC4ACB69-14AE-498D-B7A6-AEE1A661A04F}
 		{D1D6AE2F-4C6F-4627-A462-1DA68A1F2002} = {F38796C6-C4DD-481F-A79D-DD3EFA93624B}
 		{38A80319-ED17-4F07-9573-E7515E8F97D0} = {41827051-F553-404C-B7C7-4B7C82986C3E}
+		{843DD2EC-1DEB-44DC-8551-8DA879AB9A84} = {48E77EF3-0A05-4822-A4CE-20EF0B956E3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B4092E0-C5BA-4B73-BF45-4A620606858C}
