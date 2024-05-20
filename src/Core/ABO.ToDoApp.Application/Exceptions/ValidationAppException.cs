@@ -15,7 +15,7 @@ public class ValidationAppException : Exception
     /// <param name="message"></param>
     /// <param name="validation"></param>
     public ValidationAppException(IDictionary<string, string[]> errors) 
-        : base("One or more validation errors ocurred")
+        : base("One or more validation errors ocurred.")
     {
         Errors = errors;
     }
@@ -26,7 +26,7 @@ public class ValidationAppException : Exception
     /// <param name="message"></param>
     /// <param name="errors"></param>
     public ValidationAppException(IEnumerable<IdentityError> errors) 
-        : this("One or more validation errors ocurred")
+        : this("One or more validation errors ocurred.")
     {
         Errors = errors.GroupBy(e => e.Code)
             .ToDictionary(group => group.Key,

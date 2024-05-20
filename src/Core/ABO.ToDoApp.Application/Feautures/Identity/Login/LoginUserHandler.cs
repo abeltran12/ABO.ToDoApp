@@ -3,14 +3,9 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.Identity.Login;
 
-public class LoginUserHandler : IRequestHandler<LoginUserRequest,TokenResponse>
+public class LoginUserHandler(IAuthService service) : IRequestHandler<LoginUserRequest,TokenResponse>
 {
-    private readonly IAuthService _service;
-
-    public LoginUserHandler(IAuthService service)
-    {
-        _service = service;
-    }
+    private readonly IAuthService _service = service;
 
     public async Task<TokenResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {

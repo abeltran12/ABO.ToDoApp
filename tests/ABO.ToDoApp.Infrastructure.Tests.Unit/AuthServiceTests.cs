@@ -4,7 +4,6 @@ using ABO.ToDoApp.Application.Feautures.Identity.Login;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
-using ABO.ToDoApp.Infrastructure.Services;
 using ABO.ToDoApp.Infrastructure.Tests.Unit.Fakes;
 using ABO.ToDoApp.Shared.Identity.Models;
 using AutoFixture.Xunit2;
@@ -46,22 +45,24 @@ public class AuthServiceTests
 
         // Assert
         result.Should().BeOfType<RegisterUserResponse>();
+        result.As<RegisterUserResponse>().Should().NotBeNull();
+        result.Message.Should().Be("The user was successfully registered");
     }
 
     [Theory, AutoData]
-    public async Task RegisterUser_ShouldThrownAnBadRequestException_WhenRegisterFail(User user, string password)
+    public async Task RegisterUser_ShouldThrownAValidationAppException_WhenRegisterFail(User user, string password)
     {
         // Arrange
         AuthService authService =
             new(new FakeUserManager(false), _signInManager, _options, _logger, _dateTimeProvider);
 
         // Act
-        var result = async () => await authService.RegisterUser(user, password);
+        Func<Task> result = async () => await authService.RegisterUser(user, password);
 
         // Assert
         await result.Should()
-            .ThrowAsync<BadRequestException>()
-            .WithMessage("Register request invalid.");
+            .ThrowAsync<ValidationAppException>()
+            .WithMessage("One or more validation errors ocurred.");
     }
 
     [Fact]
@@ -118,7 +119,7 @@ public class AuthServiceTests
             new(new FakeUserManager(false), _signInManager, _options, _logger, _dateTimeProvider);
 
         // Act
-        var result = async () => await authService.ValidateUser(request);
+        Func<Task> result = async () => await authService.ValidateUser(request);
 
         // Assert
         await result.Should()
@@ -134,7 +135,7 @@ public class AuthServiceTests
             new(_userManager, new FakeSignInManager(false), _options, _logger, _dateTimeProvider);
 
         // Act
-        var result = async () => await authService.ValidateUser(request);
+        Func<Task> result = async () => await authService.ValidateUser(request);
 
         // Assert
         await result.Should()

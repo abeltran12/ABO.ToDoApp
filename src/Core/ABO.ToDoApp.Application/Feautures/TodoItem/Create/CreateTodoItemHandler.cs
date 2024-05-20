@@ -1,7 +1,6 @@
 ﻿using ABO.ToDoApp.Application.Exceptions;
 using ABO.ToDoApp.Domain.Repositories;
 using ABO.ToDoApp.Shared.Constants.TodoItems;
-using ABO.ToDoApp.Shared.Constants.TodoLists;
 using ABO.ToDoApp.Shared.Models.TodoItem;
 using ABO.ToDoApp.Shared.Models.TodoList;
 using AutoMapper;
@@ -40,12 +39,6 @@ public class CreateTodoItemHandler : IRequestHandler<CreateTodoItemRequest, Acti
 
     private async Task Validations(CreateTodoItemRequest request, CancellationToken cancellationToken)
     {
-        var validator = new CreateTodoItemRequestValidator();
-        var validatorResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (validatorResult.Errors.Count != 0)
-            throw new BadRequestException(TodoListMessageConstants.ErrorMessage, validatorResult);
-
         if (await _unitofwork.TodoItemRepository.GetTodoItemsCount(request.TodoListId) >= 10)
             throw new BadRequestException("The maximum allowed number of items has been reached.");
     }

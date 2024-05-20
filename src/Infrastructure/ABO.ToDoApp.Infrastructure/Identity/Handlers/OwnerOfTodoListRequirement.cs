@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace ABO.ToDoApp.Infrastructure.Data.Interceptors;
+namespace ABO.ToDoApp.Infrastructure.Identity.Handlers;
 
 public class OwnerOfTodoListRequirement : IAuthorizationRequirement
 {

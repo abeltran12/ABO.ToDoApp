@@ -4,7 +4,6 @@ using ABO.ToDoApp.Application.Feautures.Identity.Login;
 using ABO.ToDoApp.Contracts;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
-using ABO.ToDoApp.Infrastructure.Services;
 using ABO.ToDoApp.Shared.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -16,26 +15,17 @@ using System.Text;
 
 namespace ABO.ToDoApp.Infrastructure.Identity.Services;
 
-public class AuthService : IAuthService
+public class AuthService(UserManager<User> userManager,
+        SignInManager<User> signInManager,
+        IOptions<JwtConfiguration> jwtSettings,
+        ILoggerAdapter<AuthService> logger,
+        IDateTimeProvider dateTimeProvider) : IAuthService
 {
-    private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
-    private readonly IOptions<JwtConfiguration> _jwtSettings;
-    private readonly ILoggerAdapter<AuthService> _logger;
-    private readonly IDateTimeProvider _dateTimeProvider;
-
-    public AuthService(UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IOptions<JwtConfiguration> jwtSettings,
-            ILoggerAdapter<AuthService> logger,
-            IDateTimeProvider dateTimeProvider)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _jwtSettings = jwtSettings;
-        _logger = logger;
-        _dateTimeProvider = dateTimeProvider;
-    }
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly SignInManager<User> _signInManager = signInManager;
+    private readonly IOptions<JwtConfiguration> _jwtSettings = jwtSettings;
+    private readonly ILoggerAdapter<AuthService> _logger = logger;
+    private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
 
     public async Task<RegisterUserResponse> RegisterUser(User user, string password)
     {
@@ -44,7 +34,7 @@ public class AuthService : IAuthService
         var result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
-            throw new BadRequestException("Register request invalid.", result.Errors);
+            throw new ValidationAppException(result.Errors);
 
         _logger.LogInformation("Executing {Request} processed succefully", nameof(RegisterUser));
 

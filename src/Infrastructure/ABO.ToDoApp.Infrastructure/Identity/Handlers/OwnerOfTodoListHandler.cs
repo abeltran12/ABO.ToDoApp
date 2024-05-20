@@ -5,22 +5,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace ABO.ToDoApp.Infrastructure.Data.Interceptors;
+namespace ABO.ToDoApp.Infrastructure.Identity.Handlers;
 
-public class OwnerOfTodoListHandler : AuthorizationHandler<OwnerOfTodoListRequirement>
+public class OwnerOfTodoListHandler(ToDoAppContext context,
+    IHttpContextAccessor httpContextAccessor,
+    IdentityConfig identityConfig) : AuthorizationHandler<OwnerOfTodoListRequirement>
 {
-    private readonly ToDoAppContext _context;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IdentityConfig _identityConfig;
-
-    public OwnerOfTodoListHandler(ToDoAppContext context, 
-        IHttpContextAccessor httpContextAccessor, 
-        IdentityConfig identityConfig)
-    {
-        _context = context;
-        _httpContextAccessor = httpContextAccessor;
-        _identityConfig = identityConfig;
-    }
+    private readonly ToDoAppContext _context = context;
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly IdentityConfig _identityConfig = identityConfig;
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OwnerOfTodoListRequirement requirement)
     {
