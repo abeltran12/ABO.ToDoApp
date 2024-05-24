@@ -6,16 +6,10 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Get;
 
-public class GetTodoListHandler : IRequestHandler<GetTodoListRequest, (IEnumerable<GetAllTodoListResponse> todoListResponses, MetaData metaData)>
+public class GetTodoListHandler(IMapper mapper, IUnitofwork unitofwork) : IRequestHandler<GetTodoListRequest, (IEnumerable<GetAllTodoListResponse> todoListResponses, MetaData metaData)>
 {
-    private readonly IMapper _mapper;
-    private readonly IUnitofwork _unitofwork;
-
-    public GetTodoListHandler(IMapper mapper, IUnitofwork unitofwork)
-    {
-        _mapper = mapper;
-        _unitofwork = unitofwork;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitofwork _unitofwork = unitofwork;
 
     public async Task<(IEnumerable<GetAllTodoListResponse> todoListResponses, MetaData metaData)> Handle(GetTodoListRequest request, CancellationToken cancellationToken)
     {

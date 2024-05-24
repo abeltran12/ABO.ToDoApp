@@ -5,21 +5,14 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Delete;
 
-public class DeleteTodoListHandler : IRequestHandler<DeleteTodoListRequest, string>
+public class DeleteTodoListHandler(IUnitofwork unitofwork) : IRequestHandler<DeleteTodoListRequest, string>
 {
-    private readonly IUnitofwork _unitofwork;
-
-    public DeleteTodoListHandler(IUnitofwork unitofwork)
-    {
-        _unitofwork = unitofwork;
-    }
+    private readonly IUnitofwork _unitofwork = unitofwork;
 
     public async Task<string> Handle(DeleteTodoListRequest request, CancellationToken cancellationToken)
     {
-        var response = await _unitofwork.TodoListRepository.GetByIdAsync(request.Id);
-
-        if (response == null)
-            throw new NotFoundException("TodoList", request.Id);
+        var response = await _unitofwork.TodoListRepository.GetByIdAsync(request.Id) 
+            ?? throw new NotFoundException("TodoList", request.Id);
 
         response.Status = Domain.Entities.Status.Deleted;
 

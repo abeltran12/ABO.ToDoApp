@@ -8,7 +8,6 @@ public class UpdateTodoListRequestValidator : AbstractValidator<UpdateTodoListRe
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required.")
-            .NotNull().WithMessage("Name cannot be null.")
             .Length(6, 100).WithMessage("Name must be between 6 and 100 characters long.");
 
         RuleFor(x => x.Description)

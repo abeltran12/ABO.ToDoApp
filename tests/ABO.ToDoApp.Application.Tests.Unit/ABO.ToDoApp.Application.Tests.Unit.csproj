@@ -25,8 +25,8 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="TodoLists\" />
     <Folder Include="TodoItems\" />
+    <Folder Include="TodoLists\Delete\" />
   </ItemGroup>
 
   <ItemGroup>

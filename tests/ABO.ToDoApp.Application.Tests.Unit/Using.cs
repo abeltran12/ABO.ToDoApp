@@ -4,3 +4,7 @@ global using AutoFixture.Xunit2;
 global using FluentAssertions;
 global using AutoFixture;
 global using FluentValidation.Results;
+global using ABO.ToDoApp.Domain.Entities;
+global using ABO.ToDoApp.Domain.Models;
+global using ABO.ToDoApp.Domain.Repositories;
+global using AutoMapper;

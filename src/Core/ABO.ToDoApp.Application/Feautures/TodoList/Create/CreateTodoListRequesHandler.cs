@@ -7,20 +7,13 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoList.Create;
 
-public class CreateTodoListRequesHandler : IRequestHandler<CreateTodoListRequest, ActionsResponse<CreateTodoListResponse>>
+public class CreateTodoListRequesHandler(IMapper mapper,
+    IUnitofwork unitofwork,
+    IdentityConfig identityConfig) : IRequestHandler<CreateTodoListRequest, ActionsResponse<CreateTodoListResponse>>
 {
-    private readonly IMapper _mapper;
-    private readonly IUnitofwork _unitofwork;
-    private readonly IdentityConfig _identityConfig;
-
-    public CreateTodoListRequesHandler(IMapper mapper, 
-        IUnitofwork unitofwork, 
-        IdentityConfig identityConfig)
-    {
-        _mapper = mapper;
-        _unitofwork = unitofwork;
-        _identityConfig = identityConfig;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitofwork _unitofwork = unitofwork;
+    private readonly IdentityConfig _identityConfig = identityConfig;
 
     public async Task<ActionsResponse<CreateTodoListResponse>> Handle(CreateTodoListRequest request, CancellationToken cancellationToken)
     {

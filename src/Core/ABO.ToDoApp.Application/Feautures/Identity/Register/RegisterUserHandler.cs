@@ -6,16 +6,10 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.Identity.Register;
 
-public class RegisterUserHandler : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
+public class RegisterUserHandler(IAuthService service, IMapper mapper) : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
 {
-    private readonly IAuthService _service;
-    private readonly IMapper _mapper;
-
-    public RegisterUserHandler(IAuthService service, IMapper mapper)
-    {
-        _service = service;
-        _mapper = mapper;
-    }
+    private readonly IAuthService _service = service;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {

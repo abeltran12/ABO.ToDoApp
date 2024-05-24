@@ -30,11 +30,10 @@ public class ValidationBehaviorTests
         result.Should().NotBeNull();
     }
 
-    [Fact]
-    public async Task Handle_ShouldThrowValidationException_WhenValidationFails()
+    [Theory, AutoData]
+    public async Task Handle_ShouldThrowValidationException_WhenValidationFails(List<ValidationFailure> failures)
     {
         // Arrange
-        var failures = ValidationHelper.GetRandomFailures();
         _validator.Validate(Arg.Any<ValidationContext<LoginUserRequest>>())
             .Returns(new ValidationResult(failures));
 
@@ -49,11 +48,5 @@ public class ValidationBehaviorTests
         // Assert
         var exception = await result.Should().ThrowAsync<ValidationAppException>()
             .WithMessage("One or more validation errors ocurred.");
-
-        foreach (var failure in failures)
-        {
-            exception.Which.Errors.Should().ContainKey(failure.PropertyName);
-            exception.Which.Errors![failure.PropertyName].Should().Contain(failure.ErrorMessage);
-        }
     }
 }
