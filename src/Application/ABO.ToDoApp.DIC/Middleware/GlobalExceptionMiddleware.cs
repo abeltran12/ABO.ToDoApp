@@ -1,14 +1,13 @@
-﻿using ABO.ToDoApp.Application.Contracts;
-using ABO.ToDoApp.DIC.Models;
+﻿using ABO.ToDoApp.DIC.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using System.Net;
 
 namespace ABO.ToDoApp.DIC.Middleware
 {
-    public class GlobalExceptionMiddleware(ILoggerAdapter<GlobalExceptionMiddleware> logger) : IExceptionHandler
+    public class GlobalExceptionMiddleware(ILogger<GlobalExceptionMiddleware> logger) : IExceptionHandler
     {
-        private readonly ILoggerAdapter<GlobalExceptionMiddleware> _logger = logger;
+        private readonly ILogger<GlobalExceptionMiddleware> _logger = logger;
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, 
             Exception exception,
@@ -27,8 +26,7 @@ namespace ABO.ToDoApp.DIC.Middleware
                         Title = badRequestException.Message,
                         Status = (int)statusCode,
                         Detail = badRequestException.InnerException?.Message,
-                        Type = nameof(Application.Exceptions.BadRequestException),
-                        Errors = badRequestException.Errors!,
+                        Type = nameof(Application.Exceptions.BadRequestException)
                     };
                     break;
                 case Application.Exceptions.ValidationAppException validationException:

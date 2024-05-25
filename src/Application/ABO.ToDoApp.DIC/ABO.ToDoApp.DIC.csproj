@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\Infrastructure\ABO.ToDoApp.Infrastructure\ABO.ToDoApp.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
