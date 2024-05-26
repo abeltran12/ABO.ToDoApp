@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 
-namespace ABO.ToDoApp.Infrastructure.Tests.Unit.Fakes;
+namespace ABO.ToDoApp.Infrastructure.Tests.Unit.Identity.Services.Fakes;
 
 public class FakeSignInManager : SignInManager<User>
 {

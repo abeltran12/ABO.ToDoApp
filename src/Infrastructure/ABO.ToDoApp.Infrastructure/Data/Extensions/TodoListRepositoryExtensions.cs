@@ -12,7 +12,7 @@ public static class TodoListRepositoryExtensions
             return todoLists;
 
         var lowerCaseTerm = searchTerm.Trim().ToLower();
-        return todoLists.Where(t => EF.Functions.Like(t.Name.ToLower(), $"%{searchTerm}%"));
+        return todoLists.Where(t => t.Name.Contains(lowerCaseTerm, StringComparison.CurrentCultureIgnoreCase));
     }
 
     public static IQueryable<TodoListSelect> SearchStatus(this IQueryable<TodoListSelect> todoLists, Status status)

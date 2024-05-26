@@ -4,14 +4,14 @@ using ABO.ToDoApp.Application.Feautures.Identity.Login;
 using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Infrastructure.Identity.Models;
 using ABO.ToDoApp.Infrastructure.Identity.Services;
-using ABO.ToDoApp.Infrastructure.Tests.Unit.Fakes;
+using ABO.ToDoApp.Infrastructure.Tests.Unit.Identity.Services.Fakes;
 using ABO.ToDoApp.Shared.Identity.Models;
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 
-namespace ABO.ToDoApp.Infrastructure.Tests.Unit;
+namespace ABO.ToDoApp.Infrastructure.Tests.Unit.Identity.Services;
 
 public class AuthServiceTests
 {

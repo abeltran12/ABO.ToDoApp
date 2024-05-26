@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using NSubstitute;
 using System.Security.Claims;
 
-namespace ABO.ToDoApp.Infrastructure.Tests.Unit.Fakes;
+namespace ABO.ToDoApp.Infrastructure.Tests.Unit.Identity.Services.Fakes;
 
 public class FakeUserManager : UserManager<User>
 {

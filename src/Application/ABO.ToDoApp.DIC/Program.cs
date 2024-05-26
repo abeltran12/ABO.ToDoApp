@@ -1,6 +1,5 @@
 using ABO.ToDoApp.DIC;
 using ABO.ToDoApp.DIC.Middleware;
-using Microsoft.Extensions.FileProviders;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

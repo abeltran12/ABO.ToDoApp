@@ -5,16 +5,10 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoItem.Get;
 
-public class GetTodoItemHandler : IRequestHandler<GetTodoItemRequest, IEnumerable<GetTodoItemsListResponse>>
+public class GetTodoItemHandler(IMapper mapper, IUnitofwork unitofwork) : IRequestHandler<GetTodoItemRequest, IEnumerable<GetTodoItemsListResponse>>
 {
-    private readonly IMapper _mapper;
-    private readonly IUnitofwork _unitofwork;
-
-    public GetTodoItemHandler(IMapper mapper, IUnitofwork unitofwork)
-    {
-        _mapper = mapper;
-        _unitofwork = unitofwork;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitofwork _unitofwork = unitofwork;
 
     public async Task<IEnumerable<GetTodoItemsListResponse>> Handle(GetTodoItemRequest request, CancellationToken cancellationToken)
     {
