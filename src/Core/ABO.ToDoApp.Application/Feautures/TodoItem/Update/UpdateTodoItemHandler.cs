@@ -7,16 +7,10 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoItem.Update;
 
-public class UpdateTodoItemHandler : IRequestHandler<UpdateTodoItemRequest, string>
+public class UpdateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork) : IRequestHandler<UpdateTodoItemRequest, string>
 {
-    private readonly IMapper _mapper;
-    private readonly IUnitofwork _unitofwork;
-
-    public UpdateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork)
-    {
-        _mapper = mapper;
-        _unitofwork = unitofwork;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitofwork _unitofwork = unitofwork;
 
     public async Task<string> Handle(UpdateTodoItemRequest request, CancellationToken cancellationToken)
     {
@@ -34,11 +28,9 @@ public class UpdateTodoItemHandler : IRequestHandler<UpdateTodoItemRequest, stri
 
     private async Task<Domain.Entities.TodoItem> ValidateExistenceAndStatusRule(UpdateTodoItemRequest request)
     {
-        var response =
-                    await _unitofwork.TodoItemRepository.GetByIdAsync(request.TodoListId, request.Id);
-
-        if (response == null)
-            throw new NotFoundException("TodoItem", request.Id);
+        var response = await _unitofwork.TodoItemRepository
+            .GetByIdAsync(request.TodoListId, request.Id) ?? 
+                throw new NotFoundException("TodoItem", request.Id);
 
         if (response.Status.Equals(Status.Completed) 
                 && request.Status.Equals(Status.Active))

@@ -21,14 +21,9 @@ namespace ABO.ToDoApp.DIC.Controllers;
 [Route("api/v1/Todolists/{todolistId}/Todoitems")]
 [ApiController]
 [ApiExplorerSettings(GroupName = "v1")]
-public class TodoItemsController : ControllerBase
+public class TodoItemsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public TodoItemsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
+    private readonly IMediator _mediator = mediator;
 
     // GET: api/<TodoItemsController>
     [HttpGet]

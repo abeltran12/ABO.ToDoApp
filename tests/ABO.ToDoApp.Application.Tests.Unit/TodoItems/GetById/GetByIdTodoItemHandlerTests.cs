@@ -17,7 +17,7 @@ public class GetByIdTodoItemHandlerTests
     }
 
     [Theory, AutoData]
-    public async Task Handle_ShouldReturnGetByIdTodoListResponse_WhenListExists(
+    public async Task Handle_ShouldReturnGetByIdTodoTodoItemResponse_WhenTodoItemExists(
         GetByIdTodoItemRequest request,
         CancellationToken cancellationToken)
     {
@@ -55,7 +55,7 @@ public class GetByIdTodoItemHandlerTests
     }
 
     [Theory, AutoData]
-    public async Task Handle_ShouldThrownNotFoundException_WhenListNotExists(
+    public async Task Handle_ShouldThrownNotFoundException_WhenTodoItemNotExists(
         GetByIdTodoItemRequest request,
         CancellationToken cancellationToken)
     {
