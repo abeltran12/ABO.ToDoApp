@@ -8,16 +8,10 @@ using MediatR;
 
 namespace ABO.ToDoApp.Application.Feautures.TodoItem.Create;
 
-public class CreateTodoItemHandler : IRequestHandler<CreateTodoItemRequest, ActionsResponse<CreateTodoItemResponse>>
+public class CreateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork) : IRequestHandler<CreateTodoItemRequest, ActionsResponse<CreateTodoItemResponse>>
 {
-    private readonly IMapper _mapper;
-    private readonly IUnitofwork _unitofwork;
-
-    public CreateTodoItemHandler(IMapper mapper, IUnitofwork unitofwork)
-    {
-        _mapper = mapper;
-        _unitofwork = unitofwork;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitofwork _unitofwork = unitofwork;
 
     public async Task<ActionsResponse<CreateTodoItemResponse>> Handle(CreateTodoItemRequest request, CancellationToken cancellationToken)
     {
@@ -33,7 +27,7 @@ public class CreateTodoItemHandler : IRequestHandler<CreateTodoItemRequest, Acti
         return new ActionsResponse<CreateTodoItemResponse>
         {
             Data = responseData,
-            Message = TodoItemMessageConstants.TodoListCreatedSuccessfully
+            Message = TodoItemMessageConstants.TodoItemCreatedSuccessfully
         };
     }
 

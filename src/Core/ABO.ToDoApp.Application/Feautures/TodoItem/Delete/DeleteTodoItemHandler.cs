@@ -17,10 +17,8 @@ public class DeleteTodoItemHandler : IRequestHandler<DeleteTodoItemRequest, stri
     public async Task<string> Handle(DeleteTodoItemRequest request, CancellationToken cancellationToken)
     {
         var response = 
-            await _unitofwork.TodoItemRepository.GetByIdAsync(request.TodolistId, request.Id);
-
-        if (response == null)
-            throw new NotFoundException("TodoItem", request.Id);
+            await _unitofwork.TodoItemRepository.GetByIdAsync(request.TodolistId, request.Id) 
+                ?? throw new NotFoundException("TodoItem", request.Id);
 
         response.Status = Domain.Entities.Status.Deleted;
 

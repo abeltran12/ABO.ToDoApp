@@ -24,12 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="TodoItems\GetById\" />
+    <ProjectReference Include="..\..\src\Core\ABO.ToDoApp.Application\ABO.ToDoApp.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\ABO.ToDoApp.Application\ABO.ToDoApp.Application.csproj" />
+    <Folder Include="TodoItems\Update\" />
   </ItemGroup>
 
 </Project>

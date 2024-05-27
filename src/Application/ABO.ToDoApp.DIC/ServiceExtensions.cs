@@ -109,13 +109,11 @@ public static class ServiceExtensions
             return identityOptions;
         });
 
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("OwnerOfTodoListPolicy", policy =>
+        services.AddAuthorizationBuilder()
+            .AddPolicy("OwnerOfTodoListPolicy", policy =>
             {
                 policy.Requirements.Add(new OwnerOfTodoListRequirement());
             });
-        });
 
         services.AddTransient<IAuthorizationHandler, OwnerOfTodoListHandler>();
     }

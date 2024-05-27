@@ -1,8 +1,6 @@
 ﻿using ABO.ToDoApp.Application.Feautures.Identity.Register;
 using ABO.ToDoApp.Contracts;
-using ABO.ToDoApp.Domain.Entities;
 using ABO.ToDoApp.Shared.Identity.Models;
-using AutoMapper;
 
 namespace ABO.ToDoApp.Application.Tests.Unit.Identity.Register;
 
