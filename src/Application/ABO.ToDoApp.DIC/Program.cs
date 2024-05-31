@@ -6,8 +6,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Host.UseSerilog((context, loggerConfig) => 
-    loggerConfig.ReadFrom.Configuration(context.Configuration));
+//codigo viejo que funciona
+//builder.Host.UseSerilog((context, loggerConfig) => 
+//    loggerConfig.ReadFrom.Configuration(context.Configuration));
+
+Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .WriteTo.AzureApp()
+            .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// Configure logging
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(); 
+builder.Logging.AddAzureWebAppDiagnostics();
+
+//Hasta aca la configuracion
 
 builder.Services.ConfigureLogging();
 builder.Services.AddExceptionHandler<GlobalExceptionMiddleware>();

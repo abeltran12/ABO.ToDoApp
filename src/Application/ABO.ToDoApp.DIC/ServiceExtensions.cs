@@ -33,12 +33,12 @@ public static class ServiceExtensions
     {
         services.AddDbContext<ToDoAppContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("Default"), 
+            options.UseSqlServer(configuration.GetConnectionString("Default"),
                 sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
-                maxRetryCount: 3,
-                maxRetryDelay: TimeSpan.FromSeconds(15),
-                errorNumbersToAdd: null));
-        },
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    errorNumbersToAdd: [-2, 10054, 40613, 10061])).LogTo(Console.WriteLine, LogLevel.Information);
+    },
             ServiceLifetime.Scoped,
             ServiceLifetime.Singleton);
     }
