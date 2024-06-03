@@ -5,11 +5,6 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-//codigo viejo que funciona
-//builder.Host.UseSerilog((context, loggerConfig) => 
-//    loggerConfig.ReadFrom.Configuration(context.Configuration));
-
 Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
             .WriteTo.AzureApp()
@@ -54,6 +49,21 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
+app.UseXContentTypeOptions();
+app.UseXXssProtection(options => options.EnabledWithBlockMode());
+app.UseXfo(options => options.Deny());
+app.UseReferrerPolicy(opts => opts.NoReferrer());
+app.UseCsp(options => options
+    .BlockAllMixedContent()
+    .StyleSources(s => s.Self())
+    .FontSources(s => s.Self())
+    .FormActions(s => s.Self())
+    .FrameAncestors(s => s.Self())
+    .ImageSources(s => s.Self())
+    .DefaultSources(s => s.Self())
+);
 
 app.MapControllers();
 

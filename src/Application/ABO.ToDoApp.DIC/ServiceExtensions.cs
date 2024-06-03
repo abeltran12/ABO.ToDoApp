@@ -36,7 +36,7 @@ public static class ServiceExtensions
             options.UseSqlServer(configuration.GetConnectionString("Default"),
                 sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
                     maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    maxRetryDelay: TimeSpan.FromSeconds(5),
                     errorNumbersToAdd: [-2, 10054, 40613, 10061])).LogTo(Console.WriteLine, LogLevel.Information);
     },
             ServiceLifetime.Scoped,
