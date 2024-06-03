@@ -1,5 +1,11 @@
 # ToDoApp
 
+# Swagger UI
+![Swagger UI](src/Application/ABO.ToDoApp.DIC/Properties/wwwroot/img/swagger.png)
+
+# Jwt Auth
+![JWT UI](src/Application/ABO.ToDoApp.DIC/Properties/wwwroot/img/Identity.png)
+
 ## Overview
 ToDoApp is a .NET web application designed to manage a list of tasks. This application uses modern development practices and technologies including Clean Code principles, Mediatr, Entity Framework Core 8 for data access, SQL Server for the database, and ASP.NET Core Identity for security. The app is published on Azure for hosting.
 
