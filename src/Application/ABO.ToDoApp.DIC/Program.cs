@@ -30,8 +30,6 @@ builder.Services.ConfigureVersioning();
 builder.Services.ConfigureTimeProvider();
 builder.Services.ConfigureAuthService(builder.Configuration);
 
-
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
