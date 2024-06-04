@@ -34,6 +34,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseStaticFiles();
 app.UseExceptionHandler(opt => { });
 // Configure the HTTP request pipeline.
 
@@ -41,6 +42,7 @@ app.UseSwagger();
 app.UseSwaggerUI(s =>
 {
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
+    s.InjectJavascript("/custom-swagger.js");
 });
 
 app.UseSerilogRequestLogging();
@@ -48,20 +50,20 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
-app.UseXContentTypeOptions();
-app.UseXXssProtection(options => options.EnabledWithBlockMode());
-app.UseXfo(options => options.Deny());
-app.UseReferrerPolicy(opts => opts.NoReferrer());
-app.UseCsp(options => options
-    .BlockAllMixedContent()
-    .StyleSources(s => s.Self())
-    .FontSources(s => s.Self())
-    .FormActions(s => s.Self())
-    .FrameAncestors(s => s.Self())
-    .ImageSources(s => s.Self())
-    .DefaultSources(s => s.Self())
-);
+//app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
+//app.UseXContentTypeOptions();
+//app.UseXXssProtection(options => options.EnabledWithBlockMode());
+//app.UseXfo(options => options.Deny());
+//app.UseReferrerPolicy(opts => opts.NoReferrer());
+//app.UseCsp(options => options
+//    .BlockAllMixedContent()
+//    .StyleSources(s => s.Self())
+//    .FontSources(s => s.Self())
+//    .FormActions(s => s.Self())
+//    .FrameAncestors(s => s.Self())
+//    .ImageSources(s => s.Self())
+//    .DefaultSources(s => s.Self())
+//);
 
 app.MapControllers();
 
