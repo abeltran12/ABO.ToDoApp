@@ -29,6 +29,15 @@ ToDoApp is a .NET web application designed to manage a list of tasks. This appli
 - FluentValidation
 - Serilog and AzureAppServices for logging
 
+## Unit Testing
+Both the application and infrastructure projects are thoroughly unit tested using the following tools and libraries:
+
+- Xunit
+- Fluent Assertions
+- NSubstitute
+- NSubstitute
+- AutoFixture
+
 ## Getting Started
 
 ### Prerequisites
@@ -57,9 +66,9 @@ ToDoApp is a .NET web application designed to manage a list of tasks. This appli
        }
 
 3. Apply the migrations and seed the database
-    dotnet ef migrations add Initial
-    dotnet ef database update
+    - dotnet ef migrations add Initial
+    - dotnet ef database update
 
 4. Build and run the application
-    dotnet build
-    dotnet run
+    - dotnet build
+    - dotnet run
